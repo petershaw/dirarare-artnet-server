@@ -1,0 +1,78 @@
+Partlist
+
+Exported from ArtNet_Node.sch at 17/04/14 22:32
+
+EAGLE Version 6.5.0 Copyright (c) 1988-2013 CadSoft
+
+Assembly variant: 
+
+Part     Value          Device          Package          Library          Sheet
+
+C1       22p            C-EU025-024X044 C025-024X044     rcl              1
+C2       22p            C-EU025-024X044 C025-024X044     rcl              1
+C3       10µ            CPOL-EUE2-5     E2-5             rcl              1
+C4       100n           C-EU025-024X044 C025-024X044     rcl              1
+C5       10µ            CPOL-EUE2-5     E2-5             rcl              1
+C6       10µ            CPOL-EUE2-5     E2-5             rcl              1
+C7       100n           C-EU025-024X044 C025-024X044     rcl              1
+C11      220µF          CPOL-EUE3.5-8   E3,5-8           rcl              1
+C14      100n           C-EU025-024X044 C025-024X044     rcl              1
+C15      100n           C-EU050-024X044 C050-024X044     rcl              1
+C16      100n           C-EU050-024X044 C050-024X044     rcl              1
+C17      22p            C-EU025-024X044 C025-024X044     rcl              1
+C18      22p            C-EU025-024X044 C025-024X044     rcl              1
+C19      1n             C-EU025-024X044 C025-024X044     rcl              1
+C20      1n             C-EU025-024X044 C025-024X044     rcl              1
+C22      10n            C-EU025-025X050 C025-025X050     rcl              1
+C23      10n            C-EU025-025X050 C025-025X050     rcl              1
+C24      100n           C-EU025-024X044 C025-024X044     rcl              1
+C25      100n           C-EU025-025X050 C025-025X050     rcl              1
+C26      100n           C-EU025-025X050 C025-025X050     rcl              1
+C27      100n           C-EU025-025X050 C025-025X050     rcl              1
+D1       1N4004         1N4004          DO41-10          diode            1
+D3       1N4004         1N4004          DO41-10          diode            1
+DEBUG    TSW-101-02-S-Q TSW-101-02-S-Q  TSW-101-02-S-Q   con-samtec       1
+F1                      PICOFUSE        PICOFUSE         fuse             1
+FERITE                  L-EU0204/5      0204/5           rcl              1
+IC1      MEGA328-P      MEGA8-P         DIL28-3          atmel            1
+IC2      78S05          78XXL           78XXL            v-reg            1
+IC3      74LS165N       74LS165N        DIL16            74xx-us          1
+IC4      75176AP        75176AP         DIL08            751xx            1
+IC5      ENC28J60-DIL   ENC28J60-DIL    DIL28-3          enc28j60centered 1
+IC6      LM2937         LM2937          TO263-3          linear           1
+J1       DCJ0202        DCJ0202         DCJ0202          con-jack         1
+JP1                     PINHD-1X4       1X04             pinhead          1
+JP2                     PINHD-1X3       1X03             pinhead          1
+LED1                    LED5MM          LED5MM           led              1
+LED2                    LED5MM          LED5MM           led              1
+LED3                    LED5MM          LED5MM           led              1
+LED4                    LED5MM          LED5MM           led              1
+Q1       20Mhz          CRYTALHC49U-V   HC49U-V          crystal          1
+Q2       25Mhz          XTAL/S          QS               special          1
+R1       10k            R-EU_0207/10    0207/10          rcl              1
+R2       820            R-EU_0207/10    0207/10          rcl              1
+R3       180            R-EU_0207/10    0207/10          rcl              1
+R4       180            R-EU_0207/10    0207/10          rcl              1
+R5       10k            R-EU_0207/10    0207/10          rcl              1
+R6       180            R-EU_0207/10    0207/10          rcl              1
+R7       180            R-EU_0207/10    0207/10          rcl              1
+R8       2,7k           R-EU_0207/10    0207/10          rcl              1
+R9       47             R-EU_0207/10    0207/10          rcl              1
+R10      47             R-EU_0207/10    0207/10          rcl              1
+R11      47             R-EU_0207/10    0207/10          rcl              1
+R12      47             R-EU_0207/10    0207/10          rcl              1
+R13      180            R-EU_0207/10    0207/10          rcl              1
+R14                     R-TRIMM74X      RTRIM74X         resistor         1
+R15      180            R-EU_0207/10    0207/10          rcl              1
+R16      10k            R-EU_0207/10    0207/10          rcl              1
+R17      10k            R-EU_0207/10    0207/10          rcl              1
+R18      10k            R-EU_0207/10    0207/10          rcl              1
+R19      10k            R-EU_0207/10    0207/10          rcl              1
+R20      10k            R-EU_0207/10    0207/10          rcl              1
+R21      10k            R-EU_0207/10    0207/10          rcl              1
+R22      10k            R-EU_0207/10    0207/10          rcl              1
+R23      10k            R-EU_0207/10    0207/10          rcl              1
+SV1                     ML10L           ML10L            con-harting-ml   1
+TR                      20F001          DIL16/12         Realtek          1
+U$1                     1XRJ45_MM_JACK  1XRJ45_MM_JACK   con-ppt_prj006   1
+X1       2516-5         2516-5          PAK100/2500-5-16 con-3m           1

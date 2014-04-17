@@ -8,6 +8,8 @@ A ArtNet to DMX node
 
 ![Schematics](hardware/schematics_small.png)
 
+[Full sized schematics](./hardware/schematics.png).
+
 ### Partlist ###
 
 | Part             |          Value |

@@ -70,7 +70,8 @@ void ui_menucontroller_show(void){
 	while(active){
 		inputs_read_next();
 		if( cntenter > 0 ){  (*currentFunction->jump_loop)(); }
-			
+// @todo check for revision 2 
+// use INPUT_PRESS, INPUT_TURN_RIGHT and INPUT_TURN_LEFT
 		if( is_inputs_present() == 1 ){
 			currentValue = inputs_get_value();
 			int menuDirection = 99;

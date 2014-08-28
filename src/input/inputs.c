@@ -5,11 +5,14 @@
 
 void initialize_inputs(void){
 
+#if REVISION < 2
     // OUTPUT DEFINITION
     // -----------------------------------------
     DDRD |= _BV(STATUS_LED);
 	PORTD &= ~(_BV(STATUS_LED));
-	
+#endif
+
+#if REVISION < 2	
 	// PCINT CHNAGE LISTENER INTERRUPT
     // -----------------------------------------
  	PCICR |= (1 << PISO_OUTPUT_PCIE); 		// Enable pin change interrupt for PORTB 
@@ -23,7 +26,7 @@ void initialize_inputs(void){
 
     PISO_CLOCK_PORT 				&= ~_BV(PISO_CLOCK_PIN);		// CLOCK OFF
     PISO_LOAD_PORT  				|= _BV(PISO_LOAD_PIN);       // LOAD ON
-    
+#endif
     
     inputmem						= calloc(1, sizeof(Inputs_t));
     inputmem->inputs_should_read	= 0; 
@@ -32,11 +35,14 @@ void initialize_inputs(void){
 
 }
 
+#if REVISION < 2
 void piso_toggle_clock(void){
     PISO_CLOCK_PORT 				|= _BV(PISO_CLOCK_PIN);                  
     PISO_CLOCK_PORT 				&= ~_BV(PISO_CLOCK_PIN);
 }
+#endif
 
+#if REVISION < 2
 void inputs_read_next(void){   
     PISO_CLOCK_PORT 				|= _BV(PISO_CLOCK_PIN);		// turn clock high
     PISO_LOAD_PORT 					&= ~_BV(PISO_LOAD_PIN); 	// LOW on LOAD -> load 
@@ -62,17 +68,24 @@ void inputs_read_next(void){
         inputmem->inputs_present = 1;
     }
 }
+#else 
+void inputs_read_next(void){  
+	// @todo put your code here
+}
+#endif
 
 uint8_t is_inputs_should_read(void){
 	return inputmem->inputs_should_read;
 }
 
 void set_inputs_should_read(uint8_t should){
+#if REVISION < 2
 	if(should == 1){
 		PORTD |= _BV(STATUS_LED);
 	} else {
 		PORTD &= ~_BV(STATUS_LED);
 	}
+#endif
 	inputmem->inputs_should_read = should;
 }
 
@@ -95,6 +108,7 @@ int inputs_get_value(void){
    is false
    -----------------------------------------
 */
+#if REVISION < 2
  ISR (PCINT0_vect) { 
  	static int c = 0;
  	if (PISO_OUTPUT_PORT & (1<<PISO_OUTPUT_PIN)) { // detect rising edge 
@@ -105,3 +119,15 @@ int inputs_get_value(void){
  		}
  	}
  }
+#else
+ ISR (PCINT0_vect) { 
+ 	static int c = 0;
+ 	if (/** @todo wurde was bewegt */ 1) { // detect rising edge 
+ 		++c;
+ 		if(c == 2){						// @todo anpassen!!! 
+ 			set_inputs_should_read(1);
+ 			c = 0;
+ 		}
+ 	}
+ }
+#endif

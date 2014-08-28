@@ -25,6 +25,7 @@
 	// *** ================================================
 	// *** BUTTONS & ENCODERS - PISO
 	// *** ================================================
+#if REVISION < 2
 	#define PISO_CLOCK_DIRECTION_REGISTER   DDRB
 	#define PISO_CLOCK_PORT                 PORTB
 	#define PISO_CLOCK_PIN                  PB2
@@ -37,7 +38,7 @@
 	#define PISO_OUTPUT_PORT                PINB
 	#define PISO_OUTPUT_PIN                 PB1 
 	#define PISO_OUTPUT_PCIE				PCIE0
- 	
+#endif 	
 
 	// *** ================================================
 	// *** EEPROM

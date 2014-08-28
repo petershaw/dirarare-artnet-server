@@ -1,6 +1,9 @@
 
 # Settings for the basic options of the target board
 
+# BOARD REVISION
+REVISION = 2
+
 # Name of target controller
 MCU = atmega328p
 

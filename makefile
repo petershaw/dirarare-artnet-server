@@ -37,6 +37,7 @@ CFLAGS = -I$(INC) -g -mmcu=$(MCU) -O$(OPTLEVEL)  \
 		 $(DASH_VARS)							   \
          -DF_CPU=$(F_CPU)                          \
          $(BOARD_OPTS)								\
+         -DREVISION=$(REVISION)						\
 		 --std=gnu99 							   \
          -Wa,-ahlms=$(OBJECTDIR)/$(firstword       \
                     $(filter %.lst, $(<:.c=.lst)))

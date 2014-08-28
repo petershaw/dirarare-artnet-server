@@ -3,6 +3,22 @@
 //  Dirarare-ArtNet-Server
 //  Revision 1.0
 //	
+#define VALUE_TO_STRING(x) #x
+#define VALUE(x) VALUE_TO_STRING(x)
+#define VAR_NAME_VALUE(var) #var "="  VALUE(var)
+
+#ifndef REVISION
+	#define REVISION 1
+#endif
+
+#if REVISION < 2
+#warning *-----------------------------------------------------------
+#warning *
+#pragma message(VAR_NAME_VALUE(REVISION))
+#warning REVISION < 2 is not supported by this branch
+#warning *
+#warning *-----------------------------------------------------------
+#endif 
 
 #include <stdlib.h>
 #include <stdbool.h>

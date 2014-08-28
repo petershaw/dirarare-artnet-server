@@ -126,8 +126,14 @@ info:
 	avr-ld -v
 
 #### Upload ####
+
 upload:
-	$(AVRDUDE) -c $(PROGRAMMER) -B$(BOOTLOADER_BAUD) -Uflash:w:$(HEXROMTRG) -p $(PROGRAMMER_MCU)
+	$(AVRDUDE) \
+	-c $(PROGRAMMER) \
+	-B$(BOOTLOADER_BAUD) \
+	-Uflash:w:$(HEXROMTRG) \
+	-p $(PROGRAMMER_MCU) \
+	-U lfuse:w:${FUSE_LOW}:m -U hfuse:w:${FUSE_HIGH}:m -U efuse:w:${FUSE_EXTENDED}:m
 
 #### Cleanup ####
 clean:

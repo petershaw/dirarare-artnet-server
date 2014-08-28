@@ -68,109 +68,90 @@ void ui_menucontroller_show(void){
 	ui_menucontroller_print( ui_menu_show() );
 	lcd_gotoxy(15,1);
 	while(active){
-		inputs_read_next();
 		if( cntenter > 0 ){  (*currentFunction->jump_loop)(); }
-// @todo check for revision 2 
-// use INPUT_PRESS, INPUT_TURN_RIGHT and INPUT_TURN_LEFT
-		if( is_inputs_present() == 1 ){
-			currentValue = inputs_get_value();
-			int menuDirection = 99;
-			if(lastValue == INPUT_PIN_8 && currentValue == INPUT_PIN_2){
-				menuDirection = 1;
+		int menuDirection = 99; 
+		
+		if(next_action == PRESSED_RIGHT){
+			menuDirection = 1;
+		} else 
+		if(next_action == PRESSED_LEFT){
+			menuDirection = -1;
+		} 
+			
+		if( inEditMode == 0 ){
+			if(menuDirection == 1){
+				InitAndShowItem_M(ui_menu_next, cntenter, cntr_state, +1);
+				
 			} else 
-			if(lastValue == INPUT_PIN_7 && currentValue == NO_INPUT_PIN){
-				menuDirection = 1;
-			} else 
-			if(lastValue == INPUT_PIN_7 && currentValue == INPUT_PIN_2){
-				menuDirection = -1;
-			} else 
-			if(lastValue == INPUT_PIN_8 && currentValue == NO_INPUT_PIN){
-				menuDirection = -1;
-			} else 
-			if(lastValue == 0){	menuDirection = 0; }
-			else {
-				lastValue = currentValue;
-				continue;
+			if(menuDirection == -1){
+				InitAndShowItem_M(ui_menu_previous, cntenter, cntr_state, -1);			
 			}
-				
-			if( inEditMode == 0 ){
-				if(menuDirection == 1){
-					InitAndShowItem_M(ui_menu_next, cntenter, cntr_state, +1);
-					
-				} else 
-				if(menuDirection == -1){
-					InitAndShowItem_M(ui_menu_previous, cntenter, cntr_state, -1);			
-				}
+		} else {
+			inEditMode = (*currentFunction->jump_edit)(menuDirection, &ui_menu_data);
+			isEnter(menuDirection){
+				ui_menu_run( FUNCTION_IO_ENTER );
+			}
+			isLeft(menuDirection){
+				ui_menu_run( FUNCTION_IO_LEFT );
+			}
+			isRight(menuDirection){
+				ui_menu_run( FUNCTION_IO_RIGHT );
+			}
+			
+			if(inEditMode == 0){
+				// edit finished. 
+				cntr_state = 0;
+				cntenter = 0;
+			}
+		}
+		ui_menu_run( FUNCTION_RE_CALL );
+		lcd_gotoxy(0, 0);
+		lcd_puts(currentFunction->currentMessage);
+		lcd_gotoxy(currentFunction->highlightPosition ,0);
+		
+		
+		if(inEditMode == 0 && (lastValue == 0 || cntenter > 0)){
+			if(cntr_state == -1){
+				cntr_state = 2;
+				ui_menucontroller_print("<exit>");
+			} else
+			if(cntr_state == 0){
+				ui_menucontroller_print("<select>");
+			} else if(cntr_state == 1){
+				ui_menucontroller_print("<back>");
+			} else if(cntr_state == 2){
+				ui_menucontroller_print("<exit>");
 			} else {
-				inEditMode = (*currentFunction->jump_edit)(menuDirection, &ui_menu_data);
-				isEnter(menuDirection){
-					ui_menu_run( FUNCTION_IO_ENTER );
-				}
-				isLeft(menuDirection){
-					ui_menu_run( FUNCTION_IO_LEFT );
-				}
-				isRight(menuDirection){
-					ui_menu_run( FUNCTION_IO_RIGHT );
-				}
+				cntr_state = 0;
+				ui_menucontroller_print("<select>");
+			}
+			if(lastValue == 0){
+				++cntenter;
 				
-				if(inEditMode == 0){
-					// edit finished. 
-					cntr_state = 0;
+				if(cntenter >= 2){
+					if(cntr_state == 0){
+						ui_menucontroller_print("*edit "); 
+						lcd_gotoxy(0, 0);
+						inEditMode = 1; 
+					} else 
+					if(cntr_state == 1){
+						ui_menucontroller_print( ui_menu_show() );
+						ui_menu_run( FUNCTION_LAST_CALL );
+						cntenter = 0;
+						cntr_state = 0;
+						lcd_gotoxy(15, 1);
+
+					} else 
+					if(cntr_state == 2){
+						ui_menu_run( FUNCTION_LAST_CALL );
+						active = 0;
+					}
 					cntenter = 0;
 				}
 			}
-			ui_menu_run( FUNCTION_RE_CALL );
-			lcd_gotoxy(0, 0);
-			lcd_puts(currentFunction->currentMessage);
-			lcd_gotoxy(currentFunction->highlightPosition ,0);
-			
-			
-			if(inEditMode == 0 && (lastValue == 0 || cntenter > 0)){
-				if(cntr_state == -1){
-					cntr_state = 2;
-					ui_menucontroller_print("<exit>");
-				} else
-				if(cntr_state == 0){
-					ui_menucontroller_print("<select>");
-				} else if(cntr_state == 1){
-					ui_menucontroller_print("<back>");
-				} else if(cntr_state == 2){
-					ui_menucontroller_print("<exit>");
-				} else {
-					cntr_state = 0;
-					ui_menucontroller_print("<select>");
-				}
-				if(lastValue == 0){
-					++cntenter;
-					
-					if(cntenter >= 2){
-						if(cntr_state == 0){
-							ui_menucontroller_print("*edit "); 
-							lcd_gotoxy(0, 0);
-							inEditMode = 1; 
-						} else 
-						if(cntr_state == 1){
-							ui_menucontroller_print( ui_menu_show() );
-							ui_menu_run( FUNCTION_LAST_CALL );
-							cntenter = 0;
-							cntr_state = 0;
-							lcd_gotoxy(15, 1);
-
-						} else 
-						if(cntr_state == 2){
-							ui_menu_run( FUNCTION_LAST_CALL );
-							active = 0;
-						}
-						cntenter = 0;
-					}
-				}
-			}
-			lastValue = currentValue;
 		}
+		next_action = 0;
 	}
-	_delay_ms(25);
-	inputs_read_next();
-	_delay_ms(25);  
 }
 
 void ui_menucontroller_hide(void){

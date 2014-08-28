@@ -45,5 +45,4 @@ int ipintpart(char *, int);
 #define ROUTER_IP	IP(ipintpart(&gw, 0), ipintpart(&gw, 1), ipintpart(&gw, 2), ipintpart(&gw, 3))
 #define NETMASK		IP(ipintpart(&net, 0), ipintpart(&net, 1), ipintpart(&net, 2), ipintpart(&net, 3))
 
-
 #endif

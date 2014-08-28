@@ -135,17 +135,14 @@ int main(void) {
     // MAINLOOP
     // -----------------------------------------
 	while(1){
-		if( is_inputs_should_read() == 1 ){
- 			cli();
+		if(next_action != 0){
 			
 			ui_menucontroller_show(); 			
-			set_inputs_should_read(0);
+			next_action = 0;
 			
  			_delay_ms(300);
  			ui_menucontroller_hide();
 			
-			set_inputs_should_read(0);
-			sei();
  		}	
  		
 		eth_get_data();

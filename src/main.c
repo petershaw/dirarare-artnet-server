@@ -1,24 +1,8 @@
 //
 //  main.c
 //  Dirarare-ArtNet-Server
-//  Revision 1.0
+//  Revision 2.0
 //	
-#define VALUE_TO_STRING(x) #x
-#define VALUE(x) VALUE_TO_STRING(x)
-#define VAR_NAME_VALUE(var) #var "="  VALUE(var)
-
-#ifndef REVISION
-	#define REVISION 1
-#endif
-
-#if REVISION < 2
-#warning *-----------------------------------------------------------
-#warning *
-#pragma message(VAR_NAME_VALUE(REVISION))
-#warning REVISION < 2 is not supported by this branch
-#warning *
-#warning *-----------------------------------------------------------
-#endif 
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -45,8 +29,14 @@
 static char lcd_buf[16];
 
 int main(void) {	
-	
+
 	isActive = 0;
+    // BOOT DISPLAY
+    // -----------------------------------------
+ 	lcd_init(LCD_DISP_ON_CURSOR);
+	lcd_clrscr();
+	lcd_home();
+	lcd_puts_p(PSTR("Dirarare.\nbooting..."));
 	
 	// READ EEPROM
     // -----------------------------------------
@@ -77,7 +67,6 @@ int main(void) {
 
     // STARTUP APPLICATION
     // -----------------------------------------
- 	lcd_init(LCD_DISP_ON_CURSOR);
  	usart_init(BAUDRATE);
  	stack_init();
  	udp_cmd_init();
@@ -92,12 +81,8 @@ int main(void) {
     // -----------------------------------------
 	lcd_clrscr();
 	lcd_home();
-	lcd_puts_p(PSTR("Dirarare Rev.1\n"));                             // welcome message
+	lcd_puts_p(PSTR("Dirarare Rev.2\n"));                             // welcome message
 	lcd_puts(BUILD_DATE_SHORT);
-
-//  	usart_write_P(PSTR("\n"));
-//  	usart_write_P(PSTR("Dirarare Rev.1\n"));
-//  	usart_write("Build at: %s\n", BUILD_DATE);
  
 	_delay_ms(1000);	
 
@@ -136,18 +121,15 @@ int main(void) {
     // -----------------------------------------
 	while(1){
 		if(next_action != 0){
-			
 			ui_menucontroller_show(); 			
 			next_action = 0;
 			
  			_delay_ms(300);
  			ui_menucontroller_hide();
-			
  		}	
  		
 		eth_get_data();
 		artnet_main(); 
-		
 	}
 	
 }

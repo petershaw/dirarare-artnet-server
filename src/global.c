@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include "global.h"
 
+// PRAGMA HACK TO PRINT DEFINES
+// ---------------------------------------------
+#define VALUE_TO_STRING(x) #x
+#define VALUE(x) VALUE_TO_STRING(x)
+#define VAR_NAME_VALUE(var) #var "="  VALUE(var)
+
 
 // DUMMY FUNCTION
 // ---------------------------------------------
@@ -10,6 +16,20 @@ void *dummy(void){return (void *) NULL;};
 // GLOBAL SYS FUNCTIONS
 // ---------------------------------------------
 void (*reboot)(void) = (void *) 0x0000;
+
+// CHECK REVISION
+// ---------------------------------------------
+#ifndef REVISION
+	#define REVISION 0
+#endif
+#if REVISION < 2
+	#warning *-----------------------------------------------------------
+	#warning *
+	#pragma message(VAR_NAME_VALUE(REVISION))
+	#error THIS SOFTWARE IS WRITTEN FOR REVISION 2
+	#warning *
+	#warning *-----------------------------------------------------------
+#endif 
 
 // DEVICE IP CONFIGURATION
 // ---------------------------------------------

@@ -1,6 +1,6 @@
 
 #include "timer.h"
-#include "../global.h";
+#include "../global.h"
 
 
 volatile unsigned long time = 0;

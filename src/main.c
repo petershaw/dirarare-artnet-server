@@ -22,9 +22,11 @@
 #include "functions/ip.h"
 #include "functions/save.h"
 #include "ui/menu.h"
+#include "ui/menuController.h"
 #include "net/stack.h"
 #include "net/udp_cmd.h"
 #include "artnet/artnet.h"
+#include "ctrl/timer.h"
 	
 static char lcd_buf[16];
 

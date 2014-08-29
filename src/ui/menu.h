@@ -20,7 +20,7 @@ typedef struct menuentry {
     struct menuentry *parent;   // pointer to the parent entry
     char *message;              // the raw data string to show
     void (*fn)(int, void*);     // function to execute at startup
-    void *data					// data to handle with
+    void *data;					// data to handle with
 } menuentry_t;
 
 /**

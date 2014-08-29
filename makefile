@@ -1,10 +1,13 @@
 #######################################################################
 ######                                                           ######
 #######################################################################
-###### Project:   dirarare artnet server board
-###### Developer: Peter Shaw
-###### Date: Jan/2014 - Apr/2014
-###### URL: https://github.com/petershaw/dirarare-artnet-server
+###### Project:   dirarare artnet server board                   ######
+###### Developer: petershaw, fast                                ######
+###### Date: Jan/2014 - Apr/2014                                 ######
+###### URL: https://github.com/petershaw/dirarare-artnet-server  ######
+#######################################################################
+###### Revision: 2				                                 ######
+###### Date: August 2014                                         ###### 
 #######################################################################
 
 PROJECTNAME = dirarare
@@ -33,13 +36,13 @@ OPTLEVEL = s
 HEXFORMAT = ihex
 
 # compiler
-CFLAGS = -I$(INC) -g -mmcu=$(MCU) -O$(OPTLEVEL)  \
-		 $(DASH_VARS)							   \
-         -DF_CPU=$(F_CPU)                          \
-         $(BOARD_OPTS)								\
-         -DREVISION=$(REVISION)						\
-		 --std=gnu99 							   \
-         -Wa,-ahlms=$(OBJECTDIR)/$(firstword       \
+CFLAGS = -I$(INC) -g -mmcu=$(MCU) -O$(OPTLEVEL)   \
+		 $(DASH_VARS)                             \
+         -DF_CPU=$(F_CPU)                         \
+         $(BOARD_OPTS)                            \
+         -DREVISION=$(REVISION)                   \
+		 --std=gnu99                              \
+         -Wa,-ahlms=$(OBJECTDIR)/$(firstword      \
                     $(filter %.lst, $(<:.c=.lst)))
 
 # disabled options

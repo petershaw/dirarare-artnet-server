@@ -28,8 +28,7 @@ ISR (TIMER0_OVF_vect) {
  	++cnt;
  	if(cnt >= 256){
  		if(isActive != lastIsActive){
-			if(isActive == 1){ PORTD |= _BV(STATUS_LED); }
-			else {  PORTD &= ~_BV(STATUS_LED); }
+ 			// set information if ArtNet is connected or device is pinged.
 	  		ui_menucontroller_defaultoff(isActive);
 	  		lastIsActive = isActive;
 		}

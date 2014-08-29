@@ -14,13 +14,15 @@ F_CPU = 20000000UL
 EE_MAX_SIZE = 0
 
 # Define the board configuration
-HAS_LCD			= 0
-HAS_UART 		= 0
-
+HAS_LCD			= 1		# still unused 				
 
 # Output debug messages on UART
 DEBUGFN 		= usart_write
 
 BOARD_OPTS = 	-DHAS_LCD=$(HAS_LCD) \
-				-DHAS_UART=$(HAS_UART) \
 #				-DDEBUGFN=$(DEBUGFN)
+
+# FUSE CONFIGURATION 
+FUSE_LOW = 0xff
+FUSE_HIGH = 0xdf
+FUSE_EXTENDED = 0x07

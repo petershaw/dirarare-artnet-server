@@ -30,7 +30,12 @@
 	
 static char lcd_buf[16];
 
+//@todo: ETH_CS auf Port PD7 legen!
+
+
+
 int main(void) {	
+
 
 	isActive = 0;
     // BOOT DISPLAY
@@ -65,25 +70,30 @@ int main(void) {
  	ui_menu_add("Netmask",	fn_firnament_ip, 	&net);
  	ui_menu_add("Gateway",	fn_firnament_ip, 	&gw );
 	ui_menu_add("Save",		fn_firnament_save, 	NULL);
+	
+	//------------------------------------------------------------------
+	//END CONFIG INPUTS & MENU
 
 
     // STARTUP APPLICATION
     // -----------------------------------------
- 	usart_init(BAUDRATE);
+ 	/*usart_init(BAUDRATE);
  	stack_init();
  	udp_cmd_init();
  	artnet_init();
 	timer_init();
 	
 	//Ethernetcard Interrupt enable
-	ETH_INT_ENABLE;
+	ETH_INT_ENABLE;*/
 	
+	//------------------------------------------------------------------
+	//END STARTUP APPLICATION
 
     // STARTUP MESSAGES
-    // -----------------------------------------
+    //------------------------------------------------------------------
 	lcd_clrscr();
 	lcd_home();
-	lcd_puts_p(PSTR("Dirarare Rev.2\n"));                             // welcome message
+	lcd_puts_p(PSTR("Dirarare Rev.2\n"));	// welcome message
 	lcd_puts(BUILD_DATE_SHORT);
  
 	_delay_ms(1000);	
@@ -114,14 +124,21 @@ int main(void) {
 	
 	ui_menucontroller_defaultoff(0);
 	
+	//------------------------------------------------------------------
+	//END STARTUP MESSAGES
 	
+
     // ENABLE GLOBAL INTERRUPTS
-    // -----------------------------------------
+    //------------------------------------------------------------------
     sei(); 
+	// END GLOBLA INTERRUPTS
+
 
     // MAINLOOP
-    // -----------------------------------------
+	//------------------------------------------------------------------
 	while(1){
+
+		
 		if(next_action != 0){
 			ui_menucontroller_show(); 			
 			next_action = 0;
@@ -130,9 +147,14 @@ int main(void) {
  			ui_menucontroller_hide();
  		}	
  		
+ 		
 		eth_get_data();
 		artnet_main(); 
 	}
 	
+	//------------------------------------------------------------------
+	//END MAINLOOP
+	
 }
+
 

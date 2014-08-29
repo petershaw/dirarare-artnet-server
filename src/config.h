@@ -28,13 +28,12 @@
 	// *** ================================================
 	// *** BUTTONS & ENCODERS
 	// *** ================================================
-	#define INPUT_PRESS_REGISTER			DDRD
-	#define INPUT_PRESS_PORT				PORTD
-	#define INPUT_PRESS_DOWN				PD6
-	#define INPUT_TURN_REGISTER				DDRB
-	#define INPUT_TURN_PORT					PORTB
-	#define INPUT_TURN_RIGHT				PB1
-	#define INPUT_TURN_LEFT					PB2
+	#define ENCODER_REGISTER	DDRB
+	#define ENCODER_PORT		PORTB
+	#define ENCODER_PIN_PUSH	PB0
+	#define ENCODER_PIN_TURN0	PB1		
+	#define ENCODER_PIN_TURN1	PB2
+	
 	
 	
 	// *** ================================================

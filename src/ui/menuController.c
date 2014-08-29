@@ -58,15 +58,16 @@ void ui_menucontroller_info(char *text, int info){
 }
 
 void ui_menucontroller_show(void){
-	int active = 1;
-	int lastValue = -1;
-	int currentValue = 0;
-	int cntenter = 0;
-	int inEditMode = 0;
+	uint8_t active = 1;
+	uint8_t lastValue = -1;
+	uint8_t cntenter = 0;
+	uint8_t inEditMode = 0;
 	uint8_t cntr_state = 0;
+	
 	ui_menu_run( FUNCTION_FIRST_CALL );
 	ui_menucontroller_print( ui_menu_show() );
 	lcd_gotoxy(15,1);
+	
 	while(active){
 		if( cntenter > 0 ){  (*currentFunction->jump_loop)(); }
 		int menuDirection = 99; 
@@ -110,7 +111,7 @@ void ui_menucontroller_show(void){
 		lcd_gotoxy(currentFunction->highlightPosition ,0);
 		
 		
-		if(inEditMode == 0 && (lastValue == 0 || cntenter > 0)){
+		if(inEditMode == 0 && (lastValue == PRESSED_LEFT || cntenter > 0)){
 			if(cntr_state == -1){
 				cntr_state = 2;
 				ui_menucontroller_print("<exit>");
@@ -125,7 +126,7 @@ void ui_menucontroller_show(void){
 				cntr_state = 0;
 				ui_menucontroller_print("<select>");
 			}
-			if(lastValue == 0){
+			if(lastValue == 0){							// @todo, 1x selektieren 2x aufrufen. muss noch refactored werden. 
 				++cntenter;
 				
 				if(cntenter >= 2){
@@ -150,6 +151,7 @@ void ui_menucontroller_show(void){
 				}
 			}
 		}
+		lastValue = next_action;
 		next_action = 0;
 	}
 }

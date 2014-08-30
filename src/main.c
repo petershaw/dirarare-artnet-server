@@ -36,7 +36,9 @@ static char lcd_buf[16];
 
 int main(void) {	
 
-
+	int32_t val = 0;
+	int32_t lastval = 0;
+	
 	isActive = 0;
     // BOOT DISPLAY
     // -----------------------------------------
@@ -62,6 +64,7 @@ int main(void) {
 	// CONFIG INPUTS & MENU
     // -----------------------------------------
 	initialize_inputs();
+	sei(); 
 	fn_init();
 	ui_menu_init();
 	ui_menucontroller_init();
@@ -138,6 +141,18 @@ int main(void) {
 	//------------------------------------------------------------------
 	while(1){
 
+		val += encode_read1();
+		
+		if (val > lastval) {
+			//turned right
+			lastval = val;
+			//Do something
+		}
+		else {
+			//turned right
+			lastval = val;
+			//Do something
+		}
 		
 		if(next_action != 0){
 			ui_menucontroller_show(); 			

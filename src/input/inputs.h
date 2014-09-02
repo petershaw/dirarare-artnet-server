@@ -20,4 +20,7 @@ static int8_t last;
 void initialize_inputs(void);
 int8_t encode_read1( void );
 
+
+int val;
+
 #endif

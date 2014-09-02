@@ -6,6 +6,33 @@
 volatile unsigned long time = 0;
 volatile unsigned long next_reset = 0;
 
+ISR( TIMER2_OVF_vect ) {
+  
+  int8_t new, diff;
+  //new = 0;
+	static uint32_t tmp=0;
+	
+	tmp++;
+	if (tmp >=  1000) {
+		PORTD ^= (1 << PD6);  //PD6 Toggle
+		tmp = 0;
+	}
+	
+	
+  /*if( PINB & 1<<PB0)
+	next_action = PRESSED_ENTER;
+  if(PINB & 1<<PB1 )
+    new = 3;
+  if(PINB & 1<<PB2 )
+    new ^= 1;                   // convert gray to binary
+  diff = last - new;                // difference last - new
+  
+  if( diff & 1 ){               // bit 0 = value (1)
+    last = new;                 // store new as next last
+    enc_delta += (diff & 2) - 1;        // bit 1 = direction (+/-)
+  }*/
+}
+
 
 ISR (TIMER1_COMPA_vect){
 	//tick 1 second
@@ -48,10 +75,17 @@ void timer_init (void)
 	TIMSK1 |= (1 << OCIE1A);
 	next_reset = time + RESET_TIME;
 
-// Timer 0 - show active or not
+	// Timer 0 - show active or not
 	TCCR0B |= (1<<CS02) | (1<<CS00);        // Prescaler 1024
 	TIMSK0 |= (1<<TOIE0); //(1<<OCIE0A);
-
+	
+	// Timer 2	- check encoder rotation
+	TCCR2B |= (1<<CS21) | (1<<CS20); 		//Prescaler 1024
+	TIMSK2 |= (1<<TOIE2);
+	
+	//Disable Timer
+	ENCODER_TIMER2_OFF;
+	
 	return;
 };
 

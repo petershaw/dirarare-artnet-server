@@ -27,6 +27,8 @@
 #include "net/udp_cmd.h"
 #include "artnet/artnet.h"
 #include "ctrl/timer.h"
+
+#define WAIT 200
 	
 static char lcd_buf[16];
 
@@ -36,9 +38,8 @@ static char lcd_buf[16];
 
 int main(void) {	
 
-	int32_t val = 0;
+	int val = 0;
 	int32_t lastval = 0;
-	
 	isActive = 0;
     // BOOT DISPLAY
     // -----------------------------------------
@@ -63,8 +64,6 @@ int main(void) {
 
 	// CONFIG INPUTS & MENU
     // -----------------------------------------
-	initialize_inputs();
-	sei(); 
 	fn_init();
 	ui_menu_init();
 	ui_menucontroller_init();
@@ -83,57 +82,57 @@ int main(void) {
  	/*usart_init(BAUDRATE);
  	stack_init();
  	udp_cmd_init();
- 	artnet_init();
+ 	artnet_init();*/
 	timer_init();
 	
 	//Ethernetcard Interrupt enable
-	ETH_INT_ENABLE;*/
+	/*ETH_INT_ENABLE;*/
 	
 	//------------------------------------------------------------------
 	//END STARTUP APPLICATION
-
+	initialize_inputs(); //geht nicht
     // STARTUP MESSAGES
     //------------------------------------------------------------------
-	lcd_clrscr();
-	lcd_home();
+	/*lcd_clrscr();
+	//lcd_gotoxy(0,0);
 	lcd_puts_p(PSTR("Dirarare Rev.2\n"));	// welcome message
 	lcd_puts(BUILD_DATE_SHORT);
  
-	_delay_ms(1000);	
-
-	lcd_clrscr();
-	lcd_gotoxy(0,0);
+	//_delay_ms(WAIT);
+	
+	//lcd_clrscr();
+	//lcd_gotoxy(0,0);
 	lcd_puts_p(PSTR("IP:\n"));
     lcd_puts(ip);
-	_delay_ms(1000);	
+	_delay_ms(WAIT);	
 
-	lcd_clrscr();	
-	lcd_gotoxy(0,0);
+	//lcd_clrscr();	
+	//lcd_gotoxy(0,0);
 	lcd_puts_p(PSTR("Netmask:\n"));
     lcd_puts(net);
-	_delay_ms(1000);	
+	_delay_ms(WAIT);	
 	
-	lcd_clrscr();	
-	lcd_gotoxy(0,0);
+	//lcd_clrscr();	
+	//lcd_gotoxy(0,0);
 	lcd_puts_p(PSTR("Gateway:\n"));
     lcd_puts(gw);
-	_delay_ms(1000);	
+	_delay_ms(WAIT);	
 
     
-	lcd_clrscr();
-	lcd_home();
+	//lcd_clrscr();
+	//lcd_gotoxy(0,0);
 	lcd_puts(ip);
-	lcd_puts_p(PSTR("\n"));
+	lcd_puts_p(PSTR("\n"));*/
 	
-	ui_menucontroller_defaultoff(0);
+	//ui_menucontroller_defaultoff(0);
 	
 	//------------------------------------------------------------------
 	//END STARTUP MESSAGES
 	
-
+	//initialize_inputs(); //finktioniert
     // ENABLE GLOBAL INTERRUPTS
     //------------------------------------------------------------------
-    sei(); 
+    //sei(); 
 	// END GLOBLA INTERRUPTS
 
 
@@ -141,16 +140,24 @@ int main(void) {
 	//------------------------------------------------------------------
 	while(1){
 
-		val += encode_read1();
-		
+	/*DDRD |= (1 << PD6);
+	PORTD |= (1 << PD6);  //PD6 High*/
+	
+
+	/*val = encode_read1();
+
 		if (val > lastval) {
 			//turned right
 			lastval = val;
-			//Do something
+			//next_action = PRESSED_RIGHT;
+			lcd_clrscr();
+			lcd_gotoxy(0,0);
+			lcd_puts(val);
 		}
-		else {
+		else if (val < lastval) {
 			//turned right
 			lastval = val;
+			next_action = PRESSED_LEFT;
 			//Do something
 		}
 		
@@ -162,9 +169,9 @@ int main(void) {
  			ui_menucontroller_hide();
  		}	
  		
- 		
+ 		/*
 		eth_get_data();
-		artnet_main(); 
+		artnet_main(); */
 	}
 	
 	//------------------------------------------------------------------

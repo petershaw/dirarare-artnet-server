@@ -1,6 +1,6 @@
 
 #include "inputs.h"
-//#include "map.h"
+#include "../global.h"
 #include "../config.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -15,11 +15,11 @@ void initialize_inputs(void){
 	//------------------------------------------------------------------
 	
 	// PB0,PB1,PB2 as inputs
-	ENCODER_REGISTER &= ~(1 << ENCODER_PIN_PUSH) | 
+	/*ENCODER_REGISTER &= ~(1 << ENCODER_PIN_PUSH) | 
 						~(1 << ENCODER_PIN_TURN0) |
 						~(1 << ENCODER_PIN_TURN1);
     
-    // Enable pull-up
+    //Enable pull-up
     ENCODER_PORT |= (1 << ENCODER_PIN_PUSH) |
 					(1 << ENCODER_PIN_TURN0) |
 					(1 << ENCODER_PIN_TURN1);
@@ -32,25 +32,24 @@ void initialize_inputs(void){
 	if( PINB & 1<<PB2 )
 		new ^= 1;                   // convert gray to binary
 	last = new;                   // power on state
-	enc_delta = 0;
+	enc_delta = 0;*/
 	
-	ICR1 = 0x30D;
+    //Debug LED
+    DDRD |= (1 << PD6);
+    
+	DDRB &= ~(1 << DDB0);
+    PORTB |= (1 << PORTB0);
+    
+    PCICR |= (1 << PCIE0);    // set PCIE0 to enable PCMSK0 scan
+    PCMSK0 |= (1 << PCINT0);  // set PCINT0 to trigger an interrupt on state change 
 
-    TCCR1B |= (1 << WGM12);
-    // Mode 4, CTC on OCR1A
-
-    TIMSK1 |= (1 << ICIE1);
-    //Set interrupt on compare match
-
-    TCCR1B |= (1 << CS12);
-    // set prescaler to 256 and starts the timer
-
+    sei();
+    
+}
 	
 	//------------------------------------------------------------------
 	//END ROTARY ENCODER SETUP
 	
-	
-}
 
 /* INTERRUPT
    -----------------------------------------
@@ -58,25 +57,12 @@ void initialize_inputs(void){
    is true
    -----------------------------------------
 */
-
-ISR( TIMER1_COMP_vect ) {             // 1ms for manual movement
-  
-  int8_t new, diff;
-  new = 0;
-
-  if( 1<<PINB0)
-	next_action = PRESSED_ENTER;
-  if(1<<PINB1 )
-    new = 3;
-  if(1<<PINB2 )
-    new ^= 1;                   // convert gray to binary
-  diff = last - new;                // difference last - new
-  
-  if( diff & 1 ){               // bit 0 = value (1)
-    last = new;                 // store new as next last
-    enc_delta += (diff & 2) - 1;        // bit 1 = direction (+/-)
-  }
+ISR (PCINT0_vect)
+{
+    /* interrupt code here */
+    ENCODER_TIMER2_ON;
 }
+
 
 int8_t encode_read1( void )         // read single step encoders
 {

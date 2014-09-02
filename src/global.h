@@ -45,4 +45,6 @@ int ipintpart(char *, int);
 #define ROUTER_IP	IP(ipintpart(&gw, 0), ipintpart(&gw, 1), ipintpart(&gw, 2), ipintpart(&gw, 3))
 #define NETMASK		IP(ipintpart(&net, 0), ipintpart(&net, 1), ipintpart(&net, 2), ipintpart(&net, 3))
 
+#define ENCODER_TIMER2_OFF 	TIMSK2 = 0;
+#define ENCODER_TIMER2_ON 	TIMSK2 |= (1<<TOIE2);
 #endif

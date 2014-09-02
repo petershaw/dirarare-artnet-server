@@ -38,8 +38,7 @@ static char lcd_buf[16];
 
 int main(void) {	
 
-	int val = 0;
-	int32_t lastval = 0;
+	
 	isActive = 0;
     // BOOT DISPLAY
     // -----------------------------------------
@@ -140,28 +139,7 @@ int main(void) {
 	//------------------------------------------------------------------
 	while(1){
 
-	/*DDRD |= (1 << PD6);
-	PORTD |= (1 << PD6);  //PD6 High*/
-	
-
-	/*val = encode_read1();
-
-		if (val > lastval) {
-			//turned right
-			lastval = val;
-			//next_action = PRESSED_RIGHT;
-			lcd_clrscr();
-			lcd_gotoxy(0,0);
-			lcd_puts(val);
-		}
-		else if (val < lastval) {
-			//turned right
-			lastval = val;
-			next_action = PRESSED_LEFT;
-			//Do something
-		}
-		
-		if(next_action != 0){
+		if(next_action != PRESSED_ENTER){
 			ui_menucontroller_show(); 			
 			next_action = 0;
 			
@@ -169,8 +147,8 @@ int main(void) {
  			ui_menucontroller_hide();
  		}	
  		
- 		/*
-		eth_get_data();
+ 		
+		/*eth_get_data();
 		artnet_main(); */
 	}
 	

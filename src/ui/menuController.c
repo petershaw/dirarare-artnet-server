@@ -8,6 +8,8 @@
 #include "../input/map.h"
 #include "../../src-lib/lcd/lcd.h"
 
+#include "../input/inputs.h"
+
 static char lcd_buf[17];
 
 #define InitAndShowItem_M(v, ce, cs, a)	do {\
@@ -63,12 +65,37 @@ void ui_menucontroller_show(void){
 	uint8_t cntenter = 0;
 	uint8_t inEditMode = 0;
 	uint8_t cntr_state = 0;
+	val = lastval = 0;
 	
 	ui_menu_run( FUNCTION_FIRST_CALL );
 	ui_menucontroller_print( ui_menu_show() );
 	lcd_gotoxy(15,1);
 	
 	while(active){
+		
+		val = encode_read1();
+		if (val != 0) {
+		if (val > lastval) {
+			//turned right
+			lastval = val;
+			next_action = PRESSED_RIGHT;
+			lcd_clrscr();
+			lcd_gotoxy(0,0);
+			sprintf(lcd_buf, "%-4d", val);
+			lcd_puts(lcd_buf);
+		
+		}
+		else if (val < lastval) {
+			//turned right
+			lastval = val;
+			next_action = PRESSED_LEFT;
+			lcd_clrscr();
+			lcd_gotoxy(0,0);
+			sprintf(lcd_buf, "%-4d", val);
+			lcd_puts(lcd_buf);
+		}
+		}
+		
 		if( cntenter > 0 ){  (*currentFunction->jump_loop)(); }
 		int menuDirection = 99; 
 		

@@ -15,24 +15,22 @@ void initialize_inputs(void){
 	//------------------------------------------------------------------
 	
 	// PB0,PB1,PB2 as inputs
-	/*ENCODER_REGISTER &= ~(1 << ENCODER_PIN_PUSH) | 
-						~(1 << ENCODER_PIN_TURN0) |
+	ENCODER_REGISTER &= ~(1 << ENCODER_PIN_TURN0) |
 						~(1 << ENCODER_PIN_TURN1);
     
-    //Enable pull-up
+    /*//Enable pull-up
     ENCODER_PORT |= (1 << ENCODER_PIN_PUSH) |
 					(1 << ENCODER_PIN_TURN0) |
-					(1 << ENCODER_PIN_TURN1);
+					(1 << ENCODER_PIN_TURN1);*/
 
 	int8_t new;
- 
 	new = 0;
 	if( PINB & 1<<PB1 )
 		new = 3;
 	if( PINB & 1<<PB2 )
 		new ^= 1;                   // convert gray to binary
 	last = new;                   // power on state
-	enc_delta = 0;*/
+	enc_delta = 0;
 	
     //Debug LED
     DDRD |= (1 << PD6);
@@ -61,6 +59,7 @@ ISR (PCINT0_vect)
 {
     /* interrupt code here */
     ENCODER_TIMER2_ON;
+    next_action = PRESSED_ENTER;
 }
 
 

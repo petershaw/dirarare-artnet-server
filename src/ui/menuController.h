@@ -24,4 +24,7 @@ void ui_menucontroller_hide(void);
 
 void ui_menucontroller_defaultoff(int);
 
+int32_t val;
+int32_t lastval;
+
 #endif

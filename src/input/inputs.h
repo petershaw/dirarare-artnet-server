@@ -21,6 +21,6 @@ void initialize_inputs(void);
 int8_t encode_read1( void );
 
 
-int val;
+int32_t val;
 
 #endif

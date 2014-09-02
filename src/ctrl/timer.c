@@ -1,5 +1,6 @@
 
 #include "timer.h"
+#include "../input/inputs.h"
 #include "../global.h"
 
 
@@ -8,29 +9,27 @@ volatile unsigned long next_reset = 0;
 
 ISR( TIMER2_OVF_vect ) {
   
-  int8_t new, diff;
-  //new = 0;
-	static uint32_t tmp=0;
+	int8_t new, diff;
+	new = 0;
+	//static uint32_t tmp=0;
 	
-	tmp++;
+	/*tmp++;
 	if (tmp >=  1000) {
 		PORTD ^= (1 << PD6);  //PD6 Toggle
 		tmp = 0;
 	}
-	
-	
-  /*if( PINB & 1<<PB0)
-	next_action = PRESSED_ENTER;
+	*/
+
   if(PINB & 1<<PB1 )
     new = 3;
   if(PINB & 1<<PB2 )
     new ^= 1;                   // convert gray to binary
-  diff = last - new;                // difference last - new
+  diff = last - new;            // difference last - new
   
   if( diff & 1 ){               // bit 0 = value (1)
     last = new;                 // store new as next last
     enc_delta += (diff & 2) - 1;        // bit 1 = direction (+/-)
-  }*/
+  }
 }
 
 
